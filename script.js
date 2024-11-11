@@ -216,23 +216,4 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Call the function when page loads
     document.addEventListener('DOMContentLoaded', loadFormSubmissions);
-    
-    // Debug background image loading
-    const home = document.getElementById('home');
-    const about = document.getElementById('about');
-    
-    // Check if images are loading
-    const homeImg = new Image();
-    homeImg.onload = () => console.log('Home background loaded');
-    homeImg.onerror = () => console.error('Home background failed to load');
-    homeImg.src = './assets/home-bg.jpg';
-
-    const aboutImg = new Image();
-    aboutImg.onload = () => console.log('About background loaded');
-    aboutImg.onerror = () => console.error('About background failed to load');
-    aboutImg.src = './assets/about-bg.jpg';
-
-    // Add debug info
-    home.classList.add('debug-info');
-    about.classList.add('debug-info');
 });
