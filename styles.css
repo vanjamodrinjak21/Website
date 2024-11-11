@@ -2066,12 +2066,20 @@ textarea.form-input {
 }
 
 .parallax-bg {
-    /* Update the path to be relative to the CSS file location */
-    background-image: url('../assets/Home.jpg');  /* or */
-    background-image: url('/assets/Home.jpg');    /* if assets is in root */
+    background-image: url('assets/home-bg.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
 }
 
-/* For any other background images */
-.other-bg-element {
-    background-image: url('/assets/your-image.jpg');
+/* If you have other background images, update those too */
+.other-section {
+    background-image: url('/assets/other-image.jpg');
 }
