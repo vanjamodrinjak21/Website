@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#000000">
     <title>Kratki Metar</title>
+    
+    <link rel="stylesheet" href="https://use.typekit.net/qzj8jzj.css">
     <link rel="stylesheet" href="styles.css">
-    <link rel="preload" as="image" href="home-bg.jpg">
-    <link rel="preload" as="image" href="about-bg.jpg">
+    <link rel="preload" as="image" href="./assets/Home.jpg">
 </head>
 <body>
     <div class="parallax-bg"></div>
@@ -15,7 +16,7 @@
     <nav class="navbar">
         <div class="brand">
             <a href="#home">
-                <img src="logo.png" alt="Kratki Metar">
+                <img src="./assets/logo.png" alt="Kratki Metar">
             </a>
         </div>
         
@@ -100,34 +101,28 @@
 
         <div class="contact-form">
             <h2>CONTACT FORM</h2>
-            <div class="form-container">
-                <!-- Initial Form -->
-                <form id="contact-form" class="contact-form">
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" name="name" id="name" class="form-input" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Your Email</label>
-                        <input type="email" name="email" id="email" class="form-input" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="message">Your Message</label>
-                        <textarea name="message" id="message" class="form-input" maxlength="500" required></textarea>
-                        <div class="char-counter">0/500</div>
-                    </div>
-
-                    <button type="submit" class="submit-button">Send Message</button>
-                </form>
-
-                <!-- Thank You Message -->
-                <div id="thank-you-message" class="thank-you-message">
-                    <h3>Thank you for your feedback!</h3>
-                    <p>We appreciate you contacting us. We will get back to you soon!</p>
-                    <button class="another-message-btn">Send Another Message</button>
+            <form id="contact-form" class="contact-form" onsubmit="return false">
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <input type="text" name="name" class="form-input" required>
                 </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Message</label>
+                    <textarea name="message" class="form-input" required maxlength="500"></textarea>
+                    <div class="char-counter">0/500</div>
+                </div>
+                <button type="submit" class="submit-button">Send Message</button>
+            </form>
+        </div>
+        <!-- Thank You Message (initially hidden) -->
+    <div id="thank-you-message" class="thank-you-message" style="display: none;">
+        <h3>Thank you for your feedback!</h3>
+        <p>We appreciate you contacting us. We will get back to you soon!</p>
+        <button class="submit-button another-message-btn">Send Another Message</button>
             </div>
         </div>
     </section>
