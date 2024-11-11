@@ -1,8 +1,22 @@
 const mongoose = require('mongoose');
 const dbConfig = require('./config/database');
 
-// Use existing EMAILS collection
-const Email = mongoose.model('EMAILS');
+// Define the Email schema first
+const emailSchema = new mongoose.Schema({
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true
+    }
+}, { 
+    collection: 'EMAILS',  // Use existing collection
+    versionKey: false
+});
+
+// Create the model
+const Email = mongoose.model('EMAILS', emailSchema);
 
 // Function to store email
 async function storeEmail(email) {
