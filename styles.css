@@ -2083,3 +2083,51 @@ textarea.form-input {
 .other-section {
     background-image: url('/assets/other-image.jpg');
 }
+
+/* Reset any potential overlays */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+}
+
+/* Main background for home section */
+#home {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url('assets/home-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* About section background */
+#about {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background-image: url('assets/about-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Remove any dark overlays */
+.parallax-bg::after,
+#home::after,
+#about::after {
+    display: none;
+}
+
+/* Make sure z-index is correct */
+.content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Debug - add this temporarily to check if sections are rendering */
+#home {
+    background-color: rgba(255, 0, 0, 0.1); /* slight red tint to see if section is visible */
+}
