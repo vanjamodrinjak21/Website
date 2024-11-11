@@ -2064,3 +2064,14 @@ textarea.form-input {
 .another-message-btn:hover {
     background-color: #1f8ab0;
 }
+
+.parallax-bg {
+    /* Update the path to be relative to the CSS file location */
+    background-image: url('../assets/Home.jpg');  /* or */
+    background-image: url('/assets/Home.jpg');    /* if assets is in root */
+}
+
+/* For any other background images */
+.other-bg-element {
+    background-image: url('/assets/your-image.jpg');
+}
