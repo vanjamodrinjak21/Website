@@ -877,6 +877,10 @@ section {
 #projects {
     min-height: 100vh;
     background-color: var(--dark-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 0;
 }
 
 #contact {
@@ -955,44 +959,310 @@ section {
     position: relative;
     width: 100%;
     max-width: 600px;
-    right: 48%;
-    transform: translateX(-50%);
     padding: 0 20px;
+    margin-left: 5%;
+    margin-right: auto;
 }
 
 #about .section-content h2 {
-    text-align: center;
-    font-size: 3rem;
+    font-size: clamp(2rem, 5vw, 3rem);
     color: #f2f2f3;
-    margin-bottom: 2rem;
+    margin-bottom: clamp(1.5rem, 3vw, 2rem);
+    text-align: center;
+    width: 100%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: 0;
 }
 
 #about .section-content p {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 2vw, 1.2rem);
     line-height: 1.6;
-    margin-bottom: 1.5rem;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
     text-align: justify;
+    max-width: 100%;
+    padding: 0 clamp(10px, 3vw, 20px);
+}
+
+/* Tablet adjustments */
+@media screen and (max-width: 1024px) {
+    #about .section-content {
+        margin-left: 3%;
+    }
 }
 
 /* Mobile adjustments */
 @media screen and (max-width: 768px) {
     #about .section-content {
-        margin-left: 50%;
-        padding: 0 20px;
-    }
-    
-    #about .section-content h2 {
-        font-size: 2.5rem;
+        margin: 0 auto;
+        padding: 0 15px;
+        text-align: center;
     }
     
     #about .section-content p {
-        font-size: 1rem;
+        text-align: left;
     }
 }
 
-/* Projects Section */
+/* Small mobile adjustments */
+@media screen and (max-width: 480px) {
+    #about .section-content {
+        padding: 0 10px;
+    }
+}
+
+/* Projects Section Styles */
 #projects {
-    padding: 100px 0;
+    min-height: 100vh;
+    background-color: var(--dark-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 0;
+}
+
+.projects-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 80px;
+    padding: 0 120px;
+    position: relative;
+}
+
+/* Side Images Styling */
+.project-item {
+    width: 500px;
+    height: 500px;
+    overflow: hidden;
+    padding: 20px;
+    background-color: var(--dark-bg);
+}
+
+.project-item:not(.featured) {
+    filter: grayscale(100%) brightness(0.5);
+}
+
+.project-item:not(.featured) img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Featured/Center Image and Content */
+.project-item.featured {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: auto;
+    position: relative;
+    padding: 20px;
+}
+
+.project-item.featured .image-container {
+    width: 100%;
+    height: 700px;
+    overflow: hidden;
+}
+
+.project-item.featured img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Position side images to align with center of featured image */
+.project-item:first-child,
+.project-item:last-child {
+    position: relative;
+    top: -100px;
+}
+
+/* Featured Content Below Image */
+.project-content {
+    padding: 60px 20px 40px;
+    text-align: center;
+}
+
+.project-content h2 {
+    color: var(--text-color);
+    font-size: 3.5rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+}
+
+.project-content p {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto 2.5rem;
+    opacity: 0.8;
+}
+
+.view-project {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.view-project:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+/* Responsive Styles - Update positioning calculations */
+@media screen and (max-width: 1800px) {
+    .projects-grid {
+        gap: 60px;
+        padding: 0 100px;
+    }
+
+    .project-item {
+        width: 450px;
+        height: 450px;
+        padding: 18px;
+    }
+
+    .project-item.featured {
+        width: 450px;
+        padding: 18px;
+    }
+
+    .project-item.featured .image-container {
+        height: 630px;
+    }
+
+    .project-item:first-child,
+    .project-item:last-child {
+        top: -90px;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .projects-grid {
+        gap: 50px;
+        padding: 0 80px;
+    }
+
+    .project-item {
+        width: 400px;
+        height: 400px;
+        padding: 16px;
+    }
+
+    .project-item.featured {
+        width: 400px;
+        padding: 16px;
+    }
+
+    .project-item.featured .image-container {
+        height: 560px;
+    }
+
+    .project-item:first-child,
+    .project-item:last-child {
+        top: -80px;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .projects-grid {
+        gap: 40px;
+        padding: 0 60px;
+    }
+
+    .project-item {
+        width: 350px;
+        height: 350px;
+        padding: 14px;
+    }
+
+    .project-item.featured {
+        width: 350px;
+        padding: 14px;
+    }
+
+    .project-item.featured .image-container {
+        height: 490px;
+    }
+
+    .project-item:first-child,
+    .project-item:last-child {
+        top: -70px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    #projects {
+        padding: 80px 0;
+    }
+
+    .projects-grid {
+        flex-direction: column;
+        gap: 60px;
+        padding: 0 40px;
+    }
+
+    .project-item {
+        width: 400px;
+        height: 400px;
+        padding: 16px;
+    }
+
+    .project-item.featured {
+        width: 400px;
+        padding: 16px;
+    }
+
+    .project-item.featured .image-container {
+        height: 560px;
+    }
+
+    .project-item:first-child,
+    .project-item:last-child {
+        top: 0;
+    }
+
+    .project-content {
+        padding: 40px 16px 30px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .projects-grid {
+        padding: 0 20px;
+    }
+
+    .project-item {
+        width: 320px;
+        height: 320px;
+        padding: 12px;
+    }
+
+    .project-item.featured {
+        width: 320px;
+        padding: 12px;
+    }
+
+    .project-item.featured .image-container {
+        height: 448px;
+    }
+
+    .project-content {
+        padding: 30px 12px 20px;
+    }
 }
 
 /* Contact Section */
@@ -1209,6 +1479,44 @@ section {
     background: rgba(39, 161, 207, 0.5);
 }
 
+.form-group textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(39, 161, 207, 0.3);
+    color: #f2f2f3;
+    font-size: 1rem;
+    font-family: "basic-sans", sans-serif;
+    transition: border-color 0.3s ease;
+    text-align: center;
+    min-height: 200px;
+    height: 200px;
+    resize: none;
+    line-height: 1.5;
+    overflow-y: auto;
+}
+
+/* Optional: Customize scrollbar for better aesthetics */
+.form-group textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+.form-group textarea::-webkit-scrollbar-track {
+    background: rgba(39, 161, 207, 0.1);
+    border-radius: 4px;
+}
+
+.form-group textarea::-webkit-scrollbar-thumb {
+    background: rgba(39, 161, 207, 0.3);
+    border-radius: 4px;
+}
+
+.form-group textarea::-webkit-scrollbar-thumb:hover {
+    background: rgba(39, 161, 207, 0.5);
+}
+
 .send-message-btn {
     width: 100%;
     max-width: 400px;
@@ -1243,7 +1551,19 @@ section {
 
     .contact-info h2,
     .contact-form h2 {
-        font-size: 2rem;
+        font-size: 2.8rem;
+    }
+    
+    .contact-info p {
+        font-size: 1.1rem;
+    }
+    
+    .contact-details h3 {
+        font-size: 1.3rem;
+    }
+    
+    .contact-details a {
+        font-size: 1.1rem;
     }
 }
 
@@ -2063,4 +2383,69 @@ textarea.form-input {
 
 .another-message-btn:hover {
     background-color: #1f8ab0;
+}
+
+/* Project item hover effects */
+.project-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.project-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.project-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(39, 161, 207, 0.5));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.project-item:hover::before {
+    opacity: 1;
+}
+
+.project-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Special handling for featured project */
+.project-item.featured::before {
+    display: none;
+}
+
+.project-item.featured .image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.project-item.featured .image-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(39, 161, 207, 0.5));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.project-item.featured:hover .image-container::before {
+    opacity: 1;
+}
+
+.project-item.featured:hover .image-container img {
+    transform: scale(1.05);
 }
