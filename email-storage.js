@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const dbConfig = require('./config/database');
 
-// Define the Email schema first
+// Connect to MongoDB (use a separate connection for EMAILS)
+const emailsDB = mongoose.createConnection(dbConfig.mongoURI, dbConfig.options);
+
+// Simple Email Schema
 const emailSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -11,12 +14,11 @@ const emailSchema = new mongoose.Schema({
         lowercase: true
     }
 }, { 
-    collection: 'EMAILS',  // Use existing collection
+    collection: 'EMAILS',
     versionKey: false
 });
 
-// Create the model
-const Email = mongoose.model('EMAILS', emailSchema);
+const Email = emailsDB.model('EMAILS', emailSchema);
 
 // Function to store email
 async function storeEmail(email) {

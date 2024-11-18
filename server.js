@@ -92,6 +92,39 @@ messageSchema.pre('save', function(next) {
 
 const Message = mongoose.model('FORMA', messageSchema);
 
+// Email Collection Schema
+const emailSchema = new mongoose.Schema({
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true
+    },
+    provider: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    firstContact: {
+        type: Date,
+        default: Date.now
+    },
+    lastContact: {
+        type: Date,
+        default: Date.now
+    },
+    messageCount: {
+        type: Number,
+        default: 1
+    }
+}, { 
+    collection: 'Emails',
+    versionKey: false
+});
+
+const Email = mongoose.model('Email', emailSchema);
+
 // Message submission route with duplicate check
 app.post('/send-message', async (req, res) => {
     try {
@@ -127,8 +160,10 @@ app.post('/send-message', async (req, res) => {
         // Save message
         const savedMessage = await newMessage.save();
 
-        // Store email and name in existing collections
+        // Store email in EMAILS collection
         await storeEmail(cleanEmail);
+        
+        // Store name in NAMES collection
         await storeName(name);
 
         res.json({
@@ -180,7 +215,7 @@ app.get('/emails/search/:query', async (req, res) => {
 
         res.json({
             status: 'success',
-            data: EMAILS
+            data: emails
         });
 
     } catch (error) {
@@ -191,6 +226,58 @@ app.get('/emails/search/:query', async (req, res) => {
         });
     }
 });
+
+// Function to build initial email collection from existing messages
+async function buildEmailCollection() {
+    try {
+        // Clear existing emails
+        await Email.deleteMany({});
+
+        // Get all messages
+        const messages = await Message.find();
+
+        // Group by email
+        const emailGroups = {};
+        messages.forEach(msg => {
+            const email = msg.e_mail.toLowerCase();
+            if (!emailGroups[email]) {
+                emailGroups[email] = {
+                    provider: msg.e_mail_provider,
+                    firstContact: msg.timestamp || new Date(),
+                    lastContact: msg.timestamp || new Date(),
+                    count: 0
+                };
+            }
+            emailGroups[email].count++;
+            if (msg.timestamp) {
+                if (msg.timestamp < emailGroups[email].firstContact) {
+                    emailGroups[email].firstContact = msg.timestamp;
+                }
+                if (msg.timestamp > emailGroups[email].lastContact) {
+                    emailGroups[email].lastContact = msg.timestamp;
+                }
+            }
+        });
+
+        // Create email records
+        for (const [email, data] of Object.entries(emailGroups)) {
+            await Email.create({
+                email: email,
+                provider: data.provider,
+                firstContact: data.firstContact,
+                lastContact: data.lastContact,
+                messageCount: data.count
+            });
+        }
+
+        console.log('Email collection built successfully');
+    } catch (error) {
+        console.error('Error building email collection:', error);
+    }
+}
+
+// Run this once to build the initial email collection
+// buildEmailCollection();
 
 // Route to check email validity
 app.post('/check-email', (req, res) => {
