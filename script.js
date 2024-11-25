@@ -121,66 +121,7 @@ function initializeContactForm() {
             }
         });
     }
-    
-    // Function to fetch and display form submissions
-    async function loadFormSubmissions() {
-        try {
-            const response = await fetch('get_messages.php');
-            const data = await response.json();
-            
-            const formaContainer = document.querySelector('.FORMA');
-            if (!formaContainer) return;
-            
-            // Clear existing content
-            formaContainer.innerHTML = '';
-            
-            // Create table
-            const table = document.createElement('table');
-            table.className = 'submissions-table';
-            
-            // Add table header
-            table.innerHTML = `
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Message</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            `;
-            
-            // Add submissions to table
-            const tbody = table.querySelector('tbody');
-            data.forEach(submission => {
-                const date = new Date(submission.timestamp.$date);
-                const formattedDate = date.toLocaleDateString('hr-HR', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                });
-                
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${formattedDate}</td>
-                    <td>${submission.name}</td>
-                    <td>${submission.email}</td>
-                    <td>${submission.message}</td>
-                `;
-                tbody.appendChild(row);
-            });
-            
-            formaContainer.appendChild(table);
-            
-        } catch (error) {
-            console.error('Error loading submissions:', error);
-        }
-    }
-    
-    // Call the function when page loads
-    document.addEventListener('DOMContentLoaded', loadFormSubmissions);
-});}
+}
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', initializeContactForm);
