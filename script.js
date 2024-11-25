@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-menu a');
     const learnMoreBtn = document.querySelector('.learn-more-btn');
     const inputs = document.querySelectorAll('.form-input');
-    const contactForm = document.querySelector('.contact-form');
     
     // Toggle menu function
     const toggleMenu = () => {
@@ -28,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 closeMenu();
             }
             
-            // Your existing click handler code here
             e.preventDefault();
             const targetId = link.getAttribute('href');
             const targetSection = document.querySelector(targetId);
@@ -79,81 +77,47 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+});
+
+// Form submission handler
+function initializeContactForm() {
+    const contactForm = document.getElementById('contact-form');
     
-    // Form submission handler
-    function initializeContactForm() {
-        const contactForm = document.getElementById('contact-form');
-        
-        if (contactForm) {
-            contactForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                const submitButton = contactForm.querySelector('button[type="submit"]');
-                submitButton.disabled = true;
-                
-                try {
-                    // Get form data
-                    const formData = {
-                        name: contactForm.querySelector('[name="name"]').value.trim(),
-                        email: contactForm.querySelector('[name="email"]').value.trim(),
-                        message: contactForm.querySelector('[name="message"]').value.trim()
-                    };
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            
+            try {
+                const formData = {
+                    name: contactForm.querySelector('[name="name"]').value.trim(),
+                    email: contactForm.querySelector('[name="email"]').value.trim(),
+                    message: contactForm.querySelector('[name="message"]').value.trim()
+                };
 
-                    console.log('Sending data:', formData);
+                const response = await fetch('http://localhost:3000/send-message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
 
-                    // Send request
-                    const response = await fetch('http://localhost:3000/send-message', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(formData)
-                    });
+                const result = await response.json();
 
-                    // Parse response
-                    const result = await response.json();
-                    console.log('Server response:', result);
-
-                    if (result.status === 'success') {
-                        alert('Message sent successfully!');
-                        contactForm.reset();
-                    } else {
-                        throw new Error(result.message);
-                    }
-
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert('Error sending message: ' + error.message);
-                } finally {
-                    submitButton.disabled = false;
+                if (result.status === 'success') {
+                    contactForm.reset();
+                } else {
+                    throw new Error(result.message);
                 }
-            });
-        }
-    }
-    
-    // Initialize when DOM is ready
-    document.addEventListener('DOMContentLoaded', initializeContactForm);
-    
-    // Add character counter functionality
-    const messageTextarea = document.querySelector('textarea[name="message"]');
-    const charCounter = document.querySelector('.char-counter');
-    
-    if (messageTextarea && charCounter) {
-        messageTextarea.addEventListener('input', function() {
-            const remaining = this.value.length;
-            charCounter.textContent = `${remaining}/500`;
-            
-            // Add visual feedback as limit approaches
-            if (remaining >= 450) {
-                charCounter.classList.add('limit-near');
-            } else {
-                charCounter.classList.remove('limit-near');
-            }
-            
-            if (remaining >= 500) {
-                charCounter.classList.add('limit-reached');
-            } else {
-                charCounter.classList.remove('limit-reached');
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error sending message: ' + error.message);
+            } finally {
+                submitButton.disabled = false;
             }
         });
     }
@@ -216,4 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Call the function when page loads
     document.addEventListener('DOMContentLoaded', loadFormSubmissions);
-});
+});}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', initializeContactForm);
